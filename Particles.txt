@@ -1,0 +1,25 @@
+ParticleList = []
+ParticleXlocation = 100
+ParticleYlocation = 100
+ParticleColor = [0,0,0,255]
+
+
+def SpawnParticle():
+    global ParticleList  #(              0.                     ) (               1.              ) (         2.       ) (        3.    )                  
+    particlelist.append(([[ParticleXlocation, ParticleYlocation], [random.randint(0,60)/10-3, -0.2], random.randint(1,3), ParticleColor]))
+    #What is Happening?
+    #0. Particle Location
+    #1. first: speed of x, second: speed of y. Esentially how fast will the particle travel on that axis
+    #2. Particle life lenght, depends on clock speed and /1/ 
+    #3. Particle color
+
+
+def MoveParticles():
+    global ParticleList
+    for particle in ParticleList:
+        particle[0][0] += particle[1][0] #adds X axis speed (can be minus)
+        particle[0][1] += particle[1][1] #adds Y axis speed (can be minus)
+        particle[2] -= 1/4 #/1/, pretty much of life is taken away every clock tick. with tick speed of 60 and 1/4 gone its 15 units per second
+        pygame.draw.circle(screen, particle[3], particle[0], particle[2]) #draws circle on screen, with color of [3], with location of [0] and size of [2]
+        if particle[2] <= 0: #if particle reaches life lenght of 0, it will be removed
+            ParticleList.remove(particle)

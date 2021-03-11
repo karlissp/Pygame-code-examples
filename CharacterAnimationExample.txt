@@ -1,0 +1,49 @@
+# Functions: changes player sprite while walking,
+# Blinking/bobbing effect for staying
+# Easily customizable animation lenghts, durations etc
+
+#counts animation phase
+WalkingAnimationTick = 0 
+StandingAnimationTick = 0
+Walking = False 
+Standing = True 
+
+#Loads images
+Right_moving_sprite_sheet = pygame.image.load("CharacterDesigns/moving_right.png").convert_alpha()
+Left_moving_sprite_sheet = pygame.image.load("CharacterDesigns/moving_left.png").convert_alpha()
+Standing_sprite_sheet = pygame.image.load("CharacterDesigns/standing.png").convert_alpha()
+
+#Makes subsurfaces
+Right_moving_subsurface = [Right_moving_sprite_sheet.subsurface((i*Width, 0, Width, Height)) for i in range(5)]
+Left_moving_subsurface = [Left_moving_sprite_sheet.subsurface((i*Width, 0, Width, Height)) for i in range(5)]
+Standing_subsurface = [Standing_sprite_sheet.subsurface((i*Width, 0, Width, Height)) for i in range(4)]
+
+#Argument for which subsurface to load, change throught controlls
+Facing = Standing_subsurface #change in walking controlls
+
+#Animation function
+def CharacterAnimation():
+
+    global StandingAnimationTick, WalkingAnimationTick, Walking
+
+    If Standing: #if standing
+        StandingAnimationTick += 1
+        if StandingAnimationTick >= 50:
+            StandingAnimationTick = 0
+        if StandingAnimationTick > 35 and (StandingAnimationTick % 5) == 0:
+            return (Facing[int(StandingAnimationTick/5)-6])
+        return (Facing[0])
+        
+    If Walking: #if walking
+        StandingAnimationTick = 0 
+        Walking += 1
+        AnimationTick += 1
+        if WalkingAnimationTick >= 20:
+            WalkingAnimationTick = 0
+        Standing = False
+        if Walking >= 15:
+            Walking = False
+            AnimationTick = 0
+            Standing = True
+        return (Facing[int(WalkingAnimationTick/4)])
+    return (Facing[0])

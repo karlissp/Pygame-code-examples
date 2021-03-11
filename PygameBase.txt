@@ -1,0 +1,20 @@
+import pygame #, keyboard, time, random, math
+
+pygame.init()
+
+screenX = 400 #X axis
+screenY = 400 #Y axis
+screen = pygame.display.set_mode((screenX,screenY))
+background = pygame.image.load("background.png").convert_alpha()
+clock = pygame.time.Clock()
+
+
+GameRunning = True
+while GameRunning:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            GameRunning = False
+            
+    clock.tick(60)
+    screen.blit(background, (0, 0))
+    pygame.display.flip()
